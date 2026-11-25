@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conectando… · Meus Posts</title>
+<link rel="icon" href="icone.png"><link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header>
+  <img src="icone.png" alt="Meus Posts">
+  <h1>Conectando ao Meus Posts…</h1>
+  <p>Voltando para o sistema no seu computador.</p>
+</header>
+<main>
+  <p>Se nada acontecer em alguns segundos, confira se o Meus Posts está aberto no seu computador e
+     <a id="link" href="#">clique aqui</a>.</p>
+</main>
+<script>
+  // O TikTok devolve o login aqui; repassamos para o sistema que roda no computador do usuário.
+  var q = new URLSearchParams(location.search);
+  if (!q.get('code') && !q.get('error')) {
+    // Aberta direto, sem vir do login do TikTok: não há nada para repassar.
+    document.querySelector('h1').textContent = 'Esta página é só para o login do TikTok';
+    document.querySelector('header p').textContent = 'Ela é usada automaticamente depois que você entra com o TikTok.';
+    document.querySelector('main').innerHTML = '<p>Para conectar sua conta, abra o Meus Posts no seu computador, vá em <b>Ajustes</b> e clique em <b>Conectar TikTok</b>.</p>';
+  } else {
+    var destino = 'http://localhost:3000/api/tiktok/callback' + location.search;
+    document.getElementById('link').href = destino;
+    location.replace(destino);
+  }
+</script>
+</body>
+</html>
